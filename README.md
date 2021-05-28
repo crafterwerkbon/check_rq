@@ -2,6 +2,8 @@
 
 > Icinga/Nagios check for RQ (Redis Queue)
 
+[![PyPI](https://img.shields.io/pypi/v/check-rq?color=blue)](https://pypi.org/project/check-rq/)
+
 ## Usage
 
 ```
