@@ -54,13 +54,13 @@ def main():
                         help='Redis password', default='')
 
     parser.add_argument('-w', '--warn', dest='warning',
-                        help='WARNING trigger', required=True)
+                        help='WARNING trigger', default='10')
 
     parser.add_argument('-c', '--critical', dest="critical",
-                        help='CRITICAL triger', required=True)
+                        help='CRITICAL triger', default='20')
 
     parser.add_argument('-v', '--version', help='Print version',
-                        action='version', version='%(prog)s 0.1.0')
+                        action='version', version='%(prog)s 0.1.3')
 
     args = parser.parse_args()
 

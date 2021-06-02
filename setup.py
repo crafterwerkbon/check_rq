@@ -6,7 +6,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='check_rq',
-    version='0.1.2',
+    version='0.1.3',
     author='Crafter B.V.',
     author_email='koen@getcrafter.com',
     url='https://github.com/crafterwerkbon/check_rq',
