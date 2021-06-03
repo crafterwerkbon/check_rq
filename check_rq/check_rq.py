@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 """
 Nagios/icinga plugin for checking a RQ redis queues.
 
@@ -14,6 +15,7 @@ from redis import Redis
 
 class CheckRQ(nagiosplugin.Resource):
     def __init__(self,
+                 db=0,
                  queue='default',
                  host='localhost',
                  port=6379,
@@ -21,11 +23,13 @@ class CheckRQ(nagiosplugin.Resource):
                  ):
         self.queue_name = queue
         self.host = host
+        self.db = db
         self.port = port
         self.password = password
 
     def probe(self):
-        connection = Redis(self.host, self.port, self.password)
+        connection = Redis(host=self.host, port=self.port,
+                           db=self.db, password=self.password)
         queue = Queue(self.queue_name, connection=connection)
 
         queue_length = len(queue)
@@ -44,6 +48,9 @@ def main():
     parser.add_argument('--queue', dest='queue',
                         help='RQ Queue', default='default')
 
+    parser.add_argument('--db', dest='db',
+                        help='Redis Database', default='0')
+
     parser.add_argument('--host', dest='host',
                         help='Redis host', default='localhost')
 
@@ -60,12 +67,13 @@ def main():
                         help='CRITICAL triger', default='20')
 
     parser.add_argument('-v', '--version', help='Print version',
-                        action='version', version='%(prog)s 0.1.3')
+                        action='version', version='%(prog)s 0.1.5')
 
     args = parser.parse_args()
 
     check = nagiosplugin.Check(
         CheckRQ(
+            db=args.db,
             queue=args.queue,
             host=args.host,
             port=args.port,
